@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RLX Disk Pulse | Riswan-Limaga Experience (RLX)</title>
+    <style>
+        :root {
+            --deep-blue-bg: #0a1120;
+            --deep-blue-card: #111b30;
+            --deep-blue-border: #1e3154;
+            --light-blue: #00d2ff;
+            --light-blue-glow: rgba(0, 210, 255, 0.25);
+            --emerald-green: #2ecc71;
+            --emerald-dark: #219653;
+            --crimson-red: #e74c3c;
+            --text-main: #eef4fc;
+            --text-muted: #8fa3c4;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: radial-gradient(circle at top right, #132547 0%, var(--deep-blue-bg) 55%);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navbar */
+        header {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--deep-blue-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: var(--light-blue);
+        }
+
+        .brand-sub {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            margin-left: 22px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--light-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 72px 0 56px;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(0, 210, 255, 0.12);
+            border: 1px solid var(--light-blue);
+            color: var(--light-blue);
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 2.75rem;
+            line-height: 1.18;
+            font-weight: 800;
+            margin-bottom: 18px;
+        }
+
+        h1 span {
+            color: var(--light-blue);
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.08rem;
+            margin-bottom: 28px;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 13px 26px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.96rem;
+            text-decoration: none;
+            transition: transform 0.15s, box-shadow 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: var(--emerald-green);
+            color: #061b10;
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--deep-blue-card);
+            color: var(--light-blue);
+            border: 1px solid var(--light-blue);
+        }
+
+        /* Interactive Live HUD Preview Mockup */
+        .hud-mockup {
+            background: #12141a;
+            border: 1px solid #323a4b;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 0 30px var(--light-blue-glow);
+            font-family: 'Consolas', monospace;
+        }
+
+        .hud-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            font-family: 'Segoe UI', sans-serif;
+            margin-bottom: 10px;
+        }
+
+        .hud-title {
+            color: var(--light-blue);
+            font-weight: 800;
+            font-size: 0.95rem;
+        }
+
+        .hud-sub {
+            color: #8ca0b4;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+
+        .hud-controls span {
+            margin-left: 10px;
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+
+        .hud-metrics {
+            font-size: 0.85rem;
+            color: #ebf0f5;
+            margin-bottom: 8px;
+        }
+
+        .hud-bar-bg {
+            height: 9px;
+            background: #232832;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .hud-bar-fill {
+            height: 100%;
+            width: 72%;
+            background: linear-gradient(90deg, var(--emerald-green) 0%, #f1c40f 55%, var(--crimson-red) 100%);
+        }
+
+        .hud-row {
+            background: #1c202a;
+            padding: 7px 10px;
+            margin-bottom: 6px;
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.82rem;
+        }
+
+        .hud-row.throttled {
+            background: #1e2d26;
+            color: var(--emerald-green);
+        }
+
+        .hud-row.hog {
+            border-left: 3px solid var(--crimson-red);
+        }
+
+        .hud-footer {
+            color: var(--light-blue);
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.75rem;
+            margin-top: 8px;
+        }
+
+        /* Stats Strip */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin: 24px 0 64px;
+        }
+
+        .stat-card {
+            background: var(--deep-blue-card);
+            border: 1px solid var(--deep-blue-border);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .c-blue { color: var(--light-blue); }
+        .c-green { color: var(--emerald-green); }
+        .c-red { color: var(--crimson-red); }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Features Section */
+        .section-title {
+            text-align: center;
+            font-size: 1.9rem;
+            margin-bottom: 36px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+            margin-bottom: 72px;
+        }
+
+        .feature-card {
+            background: var(--deep-blue-card);
+            border: 1px solid var(--deep-blue-border);
+            border-radius: 10px;
+            padding: 24px;
+            transition: border-color 0.2s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--light-blue);
+        }
+
+        .feature-card h3 {
+            color: var(--light-blue);
+            margin-bottom: 10px;
+            font-size: 1.12rem;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.93rem;
+        }
+
+        footer {
+            border-top: 1px solid var(--deep-blue-border);
+            padding: 28px 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+        }
+
+        @media (max-width: 840px) {
+            .hero { grid-template-columns: 1fr; padding-top: 40px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .features-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="brand">
+                <span class="brand-title">RLX DISK PULSE</span>
+                <span class="brand-sub">Riswan-Limaga Experience (RLX)</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#features">Features</a>
+                <a href="https://github.com" target="_blank">Source Code</a>
+                <a href="https://github.com" target="_blank">Releases</a>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <div>
+                <span class="badge">v1.0 • Native Win32 C++ • Zero Bloat</span>
+                <h1>Stop HDD Freezes with <span>Kernel-Level</span> Precision.</h1>
+                <p>
+                    Engineered for mechanical hard drives and low-end PCs. RLX Disk Pulse monitors real-time disk latency, queue depth, and per-process I/O—letting you throttle runaway hogs in a single click.
+                </p>
+                <div class="cta-group">
+                    <a href="https://github.com" class="btn btn-primary">⬇ Download RLX-DiskPulse.exe</a>
+                    <a href="https://github.com" class="btn btn-secondary">View on GitHub</a>
+                </div>
+            </div>
+
+            <!-- HUD Visual Preview -->
+            <div class="hud-mockup">
+                <div class="hud-top">
+                    <div>
+                        <div class="hud-title">RLX DISK PULSE v1.0</div>
+                        <div class="hud-sub">Riswan-Limaga Experience (RLX)</div>
+                    </div>
+                    <div class="hud-controls">
+                        <span style="color:#a0b4c8;">_</span>
+                        <span style="color:#e74c3c;">X</span>
+                    </div>
+                </div>
+                <div class="hud-metrics">Queue: 2.40 &nbsp;|&nbsp; Latency: 68.4 ms &nbsp;|&nbsp; RAM: 54%</div>
+                <div class="hud-bar-bg"><div class="hud-bar-fill"></div></div>
+                <div class="hud-row hog">
+                    <span>TiWorker.exe</span>
+                    <span style="color:#e74c3c;">14,820.5 KB/s</span>
+                </div>
+                <div class="hud-row throttled">
+                    <span>[LOW] chrome.exe</span>
+                    <span>142.0 KB/s</span>
+                </div>
+                <div class="hud-row">
+                    <span>explorer.exe</span>
+                    <span>64.2 KB/s</span>
+                </div>
+                <div class="hud-footer">[Auto-Guard] Throttled TiWorker.exe to Very Low I/O!</div>
+            </div>
+        </section>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value c-green">&lt; 4 MB</div>
+                <div class="stat-label">Total RAM Footprint</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value c-blue">&lt; 50 ms</div>
+                <div class="stat-label">Cold Start on 5400RPM HDD</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value c-red">0%</div>
+                <div class="stat-label">Ads, Bloatware & Telemetry</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value c-blue">1 File</div>
+                <div class="stat-label">Portable Static Binary</div>
+            </div>
+        </section>
+
+        <section id="features">
+            <h2 class="section-title">Built for Extreme Efficiency</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>One-Click I/O Throttling</h3>
+                    <p>Left-click any disk-hogging process to drop its Windows kernel I/O priority to Very Low without terminating your active work.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Automated Latency Guard</h3>
+                    <p>Enable Guard Mode to automatically detect disk response spikes above 65ms and neutralize runaway background processes instantly.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Pure Win32 GDI & PDH</h3>
+                    <p>Written from scratch in C++ without heavy UI frameworks or external runtimes, guaranteeing smooth performance even on dual-core CPUs.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            &copy; 2026 <strong>Riswan-Limaga Experience (RLX)</strong>. Released under the MIT License.
+        </footer>
+    </div>
+
+</body>
+</html>
